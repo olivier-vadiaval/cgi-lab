@@ -12,14 +12,13 @@ form = cgi.FieldStorage()
 user = form.getvalue("username")
 pwd = form.getvalue("password")
 
-cookies = os.environ.get("HTTP_COOKIE").split(";")
-
 if username == user and password == pwd:
-    print("Set-Cookie: username = " + username + ";")
-    print("Set-Cookie: password = " + password + ";")
+    print("Set-Cookie: loggedIn = true;")
+    print("Set-Cookie: username = " + user + ";")
+    print("Set-Cookie: password = " + pwd + ";")
+    print("Content-Type: text/html\r\n\r\n")
+    print("Logged in\r\n <br>")
+    print("Posted Data:", user, pwd)
 
-print("Content-Type: text/html\r\n\r\n")
-print("Logged in")
-
-if len(cookies) == 2:
-    print(secret_page(user, pwd))
+else:
+    print(after_login_incorrect())
